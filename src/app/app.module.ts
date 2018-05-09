@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import 'hammerjs'
-
 import { HttpClientModule }    from '@angular/common/http';
 
 import {MatButtonModule, MatDialogModule, MatToolbarModule} from '@angular/material';
@@ -14,6 +12,7 @@ import { AlbumsComponent } from './albums/albums.component';
 import { CreateAlbumComponent } from './createalbum/createalbum.component';
 import { MessageService } from './message.service';
 import { MessageListComponent } from './messagelist/messagelist.component';
+import { ServerinfoService } from './serverinfo.service';
 
 
 @NgModule({
@@ -24,7 +23,7 @@ import { MessageListComponent } from './messagelist/messagelist.component';
     MessageListComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'pivotal-music' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -32,7 +31,7 @@ import { MessageListComponent } from './messagelist/messagelist.component';
     MatDialogModule,
     MatToolbarModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, ServerinfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

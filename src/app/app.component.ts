@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PLATFORM_ID, APP_ID, Inject, Injector } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { MatDialog } from '@angular/material';
 
@@ -11,13 +13,25 @@ import { MessageListComponent } from "./messagelist/messagelist.component";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Music';
+  title: string  = 'Music';
+  hostname: string;
 
-  constructor(public dialog: MatDialog, messageService: MessageService) {
+  constructor(public dialog: MatDialog, messageService: MessageService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+     private injector: Injector) {
+
+    if (!isPlatformBrowser(platformId)) {
+      this.hostname = this.injector.get('host');
+    }
     messageService.messageAdded$.subscribe(() => this.onMessageAdded())
+  }
+
+  ngAfterViewInit() {
+
   }
 
   private onMessageAdded() {
     let dialogRef = this.dialog.open(MessageListComponent);
   }
+
 }

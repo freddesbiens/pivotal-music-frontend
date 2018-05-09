@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('spring-music-frontend App', () => {
+describe('pivotal-music-frontend App', () => {
   let page: AppPage;
 
   beforeEach(() => {

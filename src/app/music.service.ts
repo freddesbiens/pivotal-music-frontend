@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
+import { MessageService } from "./message.service";
 
 import { Album } from "./domain/album";
 
@@ -17,14 +18,14 @@ export class MusicService {
 
   private baseURL = 'http://music.personal.cloudfoundry.fredericdesbiens.org';  
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private messageService: MessageService) { }
 
   /** GET albums from the server */
   getAlbums (): Observable<Album[]> {
     return this.http.get<Album[]>(this.baseURL)
       .pipe(
         tap(albums => this.log(`Fetched albums`)),
-        catchError(this.handleError('getHeroes', []))
+        catchError(this.handleError('getAlbums', []))
       );
   }
 
@@ -47,4 +48,9 @@ export class MusicService {
      return of(result as T);
    };
  }
+
+ /** Log a HeroService message with the MessageService */
+ private log(message: string) {
+  this.messageService.add('HeroService: ' + message);
+}
 }

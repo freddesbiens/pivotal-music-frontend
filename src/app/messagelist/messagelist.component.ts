@@ -14,4 +14,7 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
   }
 
+  clear(){
+    this.messageService.clear();
+  }
 }
