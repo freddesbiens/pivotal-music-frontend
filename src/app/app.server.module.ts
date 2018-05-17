@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
  
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutServerModule} from '@angular/flex-layout/server';
+
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,7 @@ import { AppComponent } from './app.component';
     ServerModule,
     ModuleMapLoaderModule,
     ServerTransferStateModule,
-    FlexLayoutModule
+    FlexLayoutServerModule
   ],
   providers: [
     // Add universal-only providers here

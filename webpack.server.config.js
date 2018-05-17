@@ -1,6 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
- 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
+//const copyCommand = 'cp -r %DIR%/node_modules %DIR%/dist/'.replace(/%DIR%/g, __dirname);
+//const deleteCommand = 'rm -rf %DIR%/dist/node_modules/.cache'.replace(/%DIR%/g, __dirname);
+
 module.exports = {
   entry: { server: './server.ts' },
   resolve: { extensions: ['.js', '.ts'] },
@@ -16,6 +20,7 @@ module.exports = {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   plugins: [
+
     // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
     // for 'WARNING Critical dependency: the request of a dependency is an expression'
     new webpack.ContextReplacementPlugin(
@@ -27,6 +32,13 @@ module.exports = {
       /(.+)?express(\\|\/)(.+)?/,
       path.join(__dirname, 'src'),
       {}
-    )
+    ),
+    /*new CopyWebpackPlugin([
+      { from: './package.json', to: path.join(__dirname, 'dist') },
+    ]),*/
+    new WebpackShellPlugin({
+      //onBuildStart: ['echo Copying node_modules...', copyCommand],
+      onBuildEnd: ['./createpcfdist.sh']
+    })
   ]
 };

@@ -1,6 +1,6 @@
 {
   "name": "pivotal-music-frontend",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
-    "serve:ssr": "export HOST=$HOSTNAME && node dist/server.js",
+    "serve:ssr": "export HOST=$(hostname) && node dist/server.js",
     "build:client-and-server-bundles": "ng build --prod && ng run pivotal-music-frontend:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
@@ -49,6 +49,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^10.0.4",
     "codelyzer": "^4.0.1",
+    "copy-webpack-plugin": "^4.5.1",
     "jasmine": "^3.1.0",
     "jasmine-core": "~3.1.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -61,6 +62,11 @@
     "ts-node": "~6.0.3",
     "tslint": "~5.10.0",
     "typescript": "2.7.2",
-    "webpack-cli": "^2.1.3"
+    "webpack-cli": "^2.1.3",
+    "webpack-shell-plugin": "^0.5.0"
+  },
+  "engines": {
+    "node": "8.11.x",
+    "npm": "5.6.x"
   }
 }
