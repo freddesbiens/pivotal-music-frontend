@@ -3,7 +3,7 @@
   <div *ngFor='let message of messageService.messages'> {{message}} </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-button disabled="messageService.messages.length > 0" [mat-dialog-close]="clear">Clear</button>
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  <button mat-raised-button color="accent" [disabled]="messageService.messages.length == 0" [mat-dialog-close]="clear">Clear</button>
 </mat-dialog-actions>
 

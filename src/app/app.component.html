@@ -1,17 +1,24 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mat-typography">
 
-  <a mat-button routerLink="/" >
-    <img class="pivotal-logo" src="../assets/images/pivotal.png" alt="angular">
-    <span>{{title}}</span>
-  </a>
-
+  <span class="headline">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <div>
+        <a mat-button routerLink="/">
+          <img class="pivotal-logo" src="../assets/images/pivotal.png" alt="Pivotal logo">
+        </a>
+      </div>
+      <div>{{title}}</div>
+    </div>
+  </span>
 
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
 
-  <span><div fxLayout="column" fxLayoutAlign="space-around stretch" >
-    <div>Front-end: {{hostname}}</div>
-    <div>Back-end:</div>
-  </div></span> 
+  <span class="mat-body-1">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch">
+      <div>Front-end: {{frontEndHostName}}</div>
+      <div>Back-end: {{backEndHostName}}</div>
+    </div>
+  </span>
 </mat-toolbar>
 <router-outlet></router-outlet>

@@ -5,8 +5,12 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { MatDialog } from '@angular/material';
 
-import { MessageService } from "./message.service";
+import { MessageService } from "./common/message.service";
+import { ServerInfoService } from "./server-info.service";
+
 import { MessageListComponent } from "./messagelist/messagelist.component";
+import { ServerInfo } from './domain/server-info';
+
 
 const HOSTNAME_KEY = makeStateKey("hostname");
 
@@ -17,38 +21,51 @@ const HOSTNAME_KEY = makeStateKey("hostname");
 })
 export class AppComponent {
   title: string = "Music";
-  hostname: string;
+  frontEndHostName: string;
+  backEndHostName: string;
 
-  constructor(public dialog: MatDialog, messageService: MessageService,
+
+  constructor(public dialog: MatDialog, private messageService: MessageService,
+    private serverInfoService: ServerInfoService, 
     @Inject(PLATFORM_ID) private platformId: Object, private injector: Injector,
     private state: TransferState) {
 
-    messageService.messageAdded$.subscribe(() => this.onMessageAdded())
+    this.messageService.newMessage.subscribe(() => this.onMessageAdded())
   }
 
   ngOnInit() {
-    this.hostname = this.state.get(HOSTNAME_KEY, null as any);
+    this.frontEndHostName = this.state.get(HOSTNAME_KEY, null as any);
 
-    if (!this.hostname) {
+    if (!this.frontEndHostName) {
       if (!isPlatformBrowser(this.platformId)) {
         console.log("Running on server");
-        this.hostname = this.injector.get('host');
-        this.state.set(HOSTNAME_KEY, this.hostname as any);
-        console.log(this.hostname);
+        this.frontEndHostName = this.injector.get('host');
+        this.state.set(HOSTNAME_KEY, this.frontEndHostName as any);
+        console.log(this.frontEndHostName);
       }
       else {
         console.log("Running on client");
-        console.log(this.hostname);
+        console.log(this.frontEndHostName);
       }
     }
     else{
       console.log("Hostname found.")
-      console.log(this.hostname);
+      console.log(this.frontEndHostName);
     }
+
+    this.serverInfoService.getServerInfo().subscribe(info => this.onServerInfoChanged(info));
   }
 
   ngAfterViewInit() {
 
+  }
+
+  ngOnDestroy() {
+    this.messageService.newMessage.unsubscribe();
+  }
+
+  private onServerInfoChanged(info: ServerInfo){
+    this.backEndHostName = info.hostName;
   }
 
   private onMessageAdded() {

@@ -2,19 +2,21 @@ import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-bro
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {MatButtonModule, MatDialogModule, MatToolbarModule} from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatToolbarModule } from '@angular/material';
 
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { HostnameInterceptor } from "./hostname-interceptor.HttpInterceptor";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AlbumsComponent } from './albums/albums.component';
 import { CreateAlbumComponent } from './createalbum/createalbum.component';
-import { MessageService } from './message.service';
+import { MessageService } from './common/message.service';
 import { MessageListComponent } from './messagelist/messagelist.component';
-import { ServerinfoService } from './serverinfo.service';
+import { ServerInfoService } from './server-info.service';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { ServerinfoService } from './serverinfo.service';
     CreateAlbumComponent,
     MessageListComponent
   ],
+  entryComponents: [MessageListComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'pivotal-music' }),
     BrowserTransferStateModule,
@@ -35,7 +38,14 @@ import { ServerinfoService } from './serverinfo.service';
     MatToolbarModule,
     FlexLayoutModule
   ],
-  providers: [MessageService, ServerinfoService],
+  providers: [
+    MessageService,
+    ServerInfoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HostnameInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
