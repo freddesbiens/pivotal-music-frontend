@@ -1,11 +1,60 @@
 <section class="mat-typography">
-  <p>
-    albums works!
-  </p>
-  <p>
-    <button mat-raised-button (click)="onTestClick()" color="primary">Test!</button>
-  </p>
-  <p>
-    Server info: {{serverInfo?.serverInfo}}
-  </p>
+  <div>
+    <div fxFlexFill>
+      <mat-toolbar class="transparent-background">
+        <mat-toolbar-row>
+          <span>Sort by:
+            <mat-form-field>
+              <mat-select [(value)]="sortBy" (selectionChange)="onSortByChanged()">
+                <mat-option *ngFor="let item of sortAttributes | enumValues" [value]="item.key">{{item.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-icon-button>
+              <mat-icon aria-label="Switch sort between ascending and descending" (click)="onSortOrderChanged()">{{sortAscending ? 'arrow_upward' : 'arrow_downward'}}</mat-icon>
+            </button>
+          </span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div fxFlexFill fxLayout="row wrap" fxLayoutGap="15px grid">
+        <div fxFlex *ngFor="let album of albums">
+          <div fxFlexFill fxLayoutAlign="center center">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>
+                  {{album.title}}
+                  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item>Remove</button>
+                  </mat-menu>
+                </mat-card-title>
+                <mat-card-subtitle>{{album.artist}}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <span>
+                  <div fxLayout="column" fxLayoutAlign="end center">
+                    <mat-form-field class="no-underline">
+                      <mat-label>Year</mat-label>
+                      <input matInput readonly value="{{album.releaseYear}}">
+                    </mat-form-field>
+                    <mat-form-field class="no-underline">
+                      <mat-label>Genre</mat-label>
+                      <input matInput readonly value="{{album.genre}}">
+                    </mat-form-field>
+                  </div>
+                </span>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="mat-fab-bottom-right">
+      <button mat-mini-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
+  </div>
 </section>

@@ -17,7 +17,7 @@ const httpOptions = {
 @Injectable()
 export class MusicService extends BaseService {
 
-  private baseURL = 'http://pivmusic-svr.cfapps.io';  
+  private baseURL = 'https://pivmusic-svr.cfapps.io/albums';  
   
   constructor(private http: HttpClient, messageService: MessageService) { 
     super(messageService);
@@ -27,7 +27,6 @@ export class MusicService extends BaseService {
   getAlbums (): Observable<Album[]> {
     return this.http.get<Album[]>(this.baseURL)
       .pipe(
-        tap(albums => this.log(`Fetched albums`)),
         catchError(this.handleError('getAlbums', []))
       );
   }

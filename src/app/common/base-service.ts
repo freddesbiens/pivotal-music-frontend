@@ -26,7 +26,6 @@ export abstract class BaseService {
 
     /** Log a message with the MessageService */
     log(message: string) {
-        console.log(message);
         this.messageService.add('HeroService: ' + message);
     }
 }

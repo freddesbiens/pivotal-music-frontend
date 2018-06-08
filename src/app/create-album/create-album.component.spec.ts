@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateAlbumComponent } from './createalbum.component';
+import { CreateAlbumComponent } from './create-album.component';
 
 describe('CreateAlbumComponent', () => {
   let component: CreateAlbumComponent;

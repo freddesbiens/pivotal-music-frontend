@@ -4,7 +4,9 @@ import { NgModule } from '@angular/core';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { MatButtonModule, MatDialogModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule,
+         MatGridListModule, MatIconModule, MatInputModule, MatMenuModule, 
+         MatSelectModule, MatToolbarModule } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -17,6 +19,8 @@ import { CreateAlbumComponent } from './createalbum/createalbum.component';
 import { MessageService } from './common/message.service';
 import { MessageListComponent } from './messagelist/messagelist.component';
 import { ServerInfoService } from './server-info.service';
+import { MusicService } from './music.service';
+import { EnumValuesPipe } from './enum-values.pipe';
 
 
 @NgModule({
@@ -24,7 +28,8 @@ import { ServerInfoService } from './server-info.service';
     AppComponent,
     AlbumsComponent,
     CreateAlbumComponent,
-    MessageListComponent
+    MessageListComponent,
+    EnumValuesPipe
   ],
   entryComponents: [MessageListComponent],
   imports: [
@@ -34,12 +39,20 @@ import { ServerInfoService } from './server-info.service';
     AppRoutingModule,
     HttpClientModule,
     MatButtonModule,
+    MatCardModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
     MatToolbarModule,
     FlexLayoutModule
   ],
   providers: [
     MessageService,
+    MusicService,
     ServerInfoService,
     {
       provide: HTTP_INTERCEPTORS,
